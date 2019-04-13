@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Ajax TODO</title>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h1>
+            <a href="{{ url_for('routes_admin.user_test') }}">Hello  {{ u.username }}</a>
+        </h1>
+
+{#        <form class="pure-form">#}
+            <input type="text" class="pure-input-rounded" id='id-input-todo'>
+            <button type="submit" class="pure-button" id='id-button-add'>添加</button>
+{#        </form>#}
+        <br>
+
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Content</th>
+                    <th>编辑</th>
+                    <th>删除</th>
+                    <th>创建时间</th>
+                    <th>修改时间</th>
+                </tr>
+            </thead>
+            <br>
+            <tbody class="todo-list">
+
+            </tbody>
+        </table>
+
+{#        <div class="todo-list"></div>#}
+
+        <!-- js文件的顺序 -->
+        <script src='/static/ajax/basic.js'></script>
+        <script src='/static/ajax/todo.js'></script>
+    </body>
+</html>

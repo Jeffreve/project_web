@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>user admin</title>
+    <link href="https://cdn.bootcss.com/pure/1.0.0/pure-min.css" rel="stylesheet">
+</head>
+<body>
+    <h1>
+        <a href="{{ url_for('routes_admin.user_test') }}">User admin</a>
+    </h1>
+    <br><br>
+
+    <table class="pure-table pure-table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>创建时间</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+
+        <tbody id="id-todo-list">
+        {% for u in users %}
+            <tr class="todo-cell">
+                <td>
+                    {{ u.id }}
+                </td>
+                <td>
+                    <a href="{{ url_for('routes_user.user_profile',user_id=u.id) }}">
+                        {{ u.username }}
+                    </a>
+                </td>
+                <td>
+                    {{ u.created_time_formatted() }}
+                </td>
+                <td>
+                    <a href="{{ url_for('routes_admin.user_delete',id=u.id) }}">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br><br>
+    <form class="pure-form" action="{{ url_for('routes_admin.user_update')}}" method="post">
+        <fieldset>
+            <legend>请输入需要更的用户ID和密码</legend>
+            <input type="text" name="id" placeholder="请输入id">
+            <input type="text" name="password" placeholder="请输入password">
+            <button class="pure-button pure-button-primary">修改用户密码</button>
+        </fieldset>
+    </form>
+</body>
+</html>

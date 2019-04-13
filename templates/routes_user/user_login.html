@@ -1,0 +1,78 @@
+{% extends "base1.html" %}
+
+
+{#title#}
+{% block title %}
+登陆
+{% endblock %}
+
+
+{#style#}
+{% block style %}
+<link rel="stylesheet" href="/static/css/login.css">
+{% endblock %}
+
+
+{#content#}
+{% block content %}
+<div id="content">
+    <div class="panel">
+        <div class="header">
+            <ul class="breadcrumb">
+                <li><a href={{ url_for('routes_blog.index') }}>主页</a>
+                <span class="divider">/</span></li>
+                <li class="active">登录</li>
+            </ul>
+        </div>
+
+        <div class="inner">
+            {% if message == '用户名或者密码错误'%}
+                <div class="alert alert-error">
+                    <a class="close" data-dismiss="alert" href="#">×</a>
+                    <strong>{{ message }}</strong>
+                </div>
+            {% endif %}
+
+            <form id="signin_form" class="form-horizontal" action="{{ url_for('routes_user.login') }}" method="post">
+                <div class="control-group">
+                    <label class="control-label" for="name">用户名</label>
+                    <div class="controls">
+                        <input class="input-xlarge" id="name" name="username" size="30" type="text">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="pass">密码</label>
+                    <div class="controls">
+                        <input class="input-xlarge" id="pass" name="password" size="30" type="password">
+                    </div>
+                </div>
+
+{#                csrf#}
+                <input type="hidden" name="token" value={{ token }}>
+
+                <div class="form-actions">
+
+                    <input type="submit" class="span-primary" value="登录">
+
+                    <a href="{{ url_for('routes_user.register_view') }}">
+                        <span class="span-info">
+                            用户注册
+                        </span>
+                    </a>
+
+                    <a id="forgot_password" href="{{ url_for('routes_user.password_view') }}">忘记密码</a>
+                    <br>
+                    <br>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{#script#}
+{% block script %}
+<script src="/static/js/login.js"></script>
+{% endblock %}

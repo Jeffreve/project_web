@@ -1,0 +1,197 @@
+{% extends "base2.html" %}
+
+
+{#title#}
+{% block title %}
+Profile
+{% endblock %}
+
+
+{#style#}
+{% block style %}
+<link rel="stylesheet" href="/static/css/profile.css" media="all">
+{% endblock %}
+
+
+{#content#}
+{% block content %}
+    <div id="content">
+        <div class="panel">
+            <div class="header">
+                <ul class="breadcrumb">
+                    <li><a href={{ url_for('routes_blog.index') }}>主页</a>
+                    <span class="divider">/</span></li>
+                    <li class="active">个人主页</li>
+                </ul>
+            </div>
+            <div class="inner userinfo">
+                <div class="user_big_avatar">
+                    <img src="{{ v.user_image }}" class="user_avatar">
+                </div>
+                <a class="dark">{{ v.username }}</a>
+                <div class="user_profile">
+                    <ul class="unstyled">
+                        <li>
+                            <div class="dark" target="_blank">
+                                电子邮箱：{{ v.email }}
+                            </div>
+                            <div class="dark" target="_blank">
+                                个人签名：{{ v.signature }}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">最近创建的话题</span>
+            </div>
+
+            {% for blog in blogs1 %}
+            <div class="cell">
+                <a class="user_avatar pull-left" href="{{ url_for('routes_user.user_profile', user_id=blog.user_id) }}">
+                    <img src="{{ blog.user().user_image }}">
+                </a>
+
+                <span class="reply_count pull-left">
+                    <span class="count_of_replies" title="回复数">{{ blog.comments()|count }}</span>
+                    <span class="count_seperator">/</span>
+                    <span class="count_of_visits" title="点击数">{{ blog.view }}</span>
+                </span>
+
+
+                <span class="last_time pull-right">
+                    <span class="last_active_time time_live" data-ct="{{ blog.created_time }}"></span>
+                </span>
+
+
+                <div class="topic_title_wrapper">
+                    <a class="topic_title" href="{{ url_for("routes_blog.detail", blog_id=blog.id) }}">
+                        {{ blog.title }}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="cell more">
+{#                <a class="dark" href="https://cnodejs.org/user/Jeffreve/topics">查看更多»</a>#}
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">最近参与的话题</span>
+            </div>
+
+            {% for blog in blogs2 %}
+            <div class="cell">
+                <a class="user_avatar pull-left" href="{{ url_for('routes_user.user_profile', user_id=blog.user_id) }}"">
+                    <img src="{{ blog.user().user_image }}">
+                </a>
+
+                <span class="reply_count pull-left">
+                    <span class="count_of_replies" title="回复数">{{ blog.comments()|count }}</span>
+                    <span class="count_seperator">/</span>
+                    <span class="count_of_visits" title="点击数">{{ blog.view }}</span>
+                </span>
+
+
+                <span class="last_time pull-right">
+                    <span class="last_active_time time_live" data-ct="{{ blog.reply_time() }}"></span>
+                </span>
+
+
+                <div class="topic_title_wrapper">
+                    <a class="topic_title" href="{{ url_for("routes_blog.detail", blog_id=blog.id) }}">
+                        {{ blog.title }}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="cell more">
+{#                <a class="dark" href="https://cnodejs.org/user/Jeffreve/replies">查看更多»</a>#}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+
+{#script#}
+{% block script %}
+<script async="" src="/static/js/profile.js"></script>
+
+<script>
+    var log = function() {
+        console.log.apply(console, arguments)
+    }
+
+    var e = function (sel) {
+        return document.querySelector(sel)
+    }
+
+    var es = function (sel) {
+        return document.querySelectorAll(sel)
+    }
+
+    var markContents = function () {
+        var contentDivs = es('.markdown-text')
+        for (var i = 0; i < contentDivs.length; i++) {
+            var contentDiv = contentDivs[i]
+            console.log('pre marked', contentDiv.textContent, contentDiv.innerHTML)
+            var content = marked(contentDiv.textContent)
+            console.log('after marked', content)
+            contentDiv.innerHTML = content
+        }
+    }
+
+    var highlight = function () {
+        var code_list = es('pre code')
+        for (var i = 0; i < code_list.length; i++) {
+            var code = code_list[i]
+            code.className = code.className.replace('lang', 'language')
+        }
+    }
+
+    var registerTimer = function () {
+        setInterval(function () {
+            var times = es('.time_live')
+            for (var i = 0; i < times.length; i++) {
+                var t = times[i]
+                var time = Number(t.dataset.ct)
+                var now = Math.floor(new Date() / 1000)
+                // delta 是秒数
+                var delta = now - time
+                log(delta)
+                if (delta <= 60){
+                    var s = `${delta} 秒前`
+                }
+                else if (delta <= 3600){
+                    delta = Math.floor(delta / 60)
+                    var s = `${delta} 分钟前`
+                }
+                else if (delta <= 86400){
+                    delta = Math.floor(delta / 3600)
+                    var s = `${delta} 小时前`
+                }
+                else{
+                    delta = Math.floor(delta / 86400)
+                    var s = `${delta} 天前`
+                }
+                t.innerText = s
+            }
+        }, 1000)
+    }
+
+    var __main = function () {
+        markContents()
+        registerTimer()
+        highlight()
+    }
+
+    __main()
+</script>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+    <div id="sidebar">
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">个人信息</span>
+            </div>
+            <div class="inner">
+                <div class="user_card">
+                    <div>
+{#                        左侧头像 链接为个人信息#}
+                        <a class="user_avatar" href="{{ url_for('routes_user.user_profile', user_id=v.id) }}">
+                            <img src="{{ v.user_image }}" title="Jeffreve">
+                        </a>
+
+{#                        右侧名字 链接为个人信息#}
+                        <span class="user_name">
+                            <a class="dark" href="{{ url_for('routes_user.user_profile', user_id=v.id) }}">
+                                {{ v.username }}
+                            </a>
+                        </span>
+
+{#                        签名#}
+                        <div class="space clearfix"></div>
+                        <span class="signature">
+                            {% if v.signature == '' %}
+                                “ 这家伙很懒，什么个性签名都没有留下。 ”
+                            {% else %}
+                                “ {{ v.signature }} ”
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="inner">
+                <a href="{{ url_for('routes_blog.new') }}" id="create_topic_btn">
+                    <span class="span-success">发布话题</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">Jcode 论坛</span>
+            </div>
+            <div class="inner">
+                <p>在这里你可以：</p>
+                <ul>
+                    <li>向别人提出你遇到的问题</li>
+                    <li>帮助遇到问题的人</li>
+                    <li>分享自己的知识</li>
+                    <li>和其它人一起进步</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

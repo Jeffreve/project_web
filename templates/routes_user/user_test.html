@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ u.username }} 主页</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <h1>Hello, {{ u.username }}</h1>
+
+    <a class="pure-button pure-button-primary" href="{{ url_for('routes_user.register_view') }}">
+        Register
+    </a>
+
+    <a class="pure-button pure-button-primary" href="{{ url_for('routes_user.login_view') }}">
+        Login
+    </a>
+
+    <a class="pure-button pure-button-primary" href="{{ url_for('routes_admin.board_index') }}">
+        Board
+    </a>
+
+    <a class="pure-button pure-button-primary" href="{{ url_for('routes_admin.user_index') }}">
+        Admin
+    </a>
+
+    <img src="/static/pic/doge.gif"/>
+    <img src="/static/pic/doge1.jpg"/>
+    <img src="/static/pic/doge2.gif"/>
+
+
+    <br><br>
+    <div>
+    <style scoped>
+
+        .button-success,
+        .button-error,
+        .button-warning,
+        .button-secondary {
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-success {
+            background: rgb(28, 184, 65); /* this is a green */
+        }
+
+        .button-error {
+            background: rgb(202, 60, 60); /* this is a maroon */
+        }
+
+        .button-warning {
+            background: rgb(223, 117, 20); /* this is an orange */
+        }
+
+        .button-secondary {
+            background: rgb(66, 184, 221); /* this is a light blue */
+        }
+
+    </style>
+
+
+    <a class="button-error pure-button" href="{{ url_for('routes_blog.index') }}">
+        Blog
+    </a>
+
+    <a class="button-error pure-button" href="{{ url_for('routes_ajaxtodo.index') }}">
+        Ajaxtodo
+    </a>
+
+    <a class="button-error pure-button" href="{{ url_for('routes_ajaxweibo.index', user_id=u.id) }}">
+        Ajaxweibo
+    </a>
+    <br><br>
+
+    </div>
+</body>
+</html>

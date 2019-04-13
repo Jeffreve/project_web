@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mail</title>
+    <link href="https://cdn.bootcss.com/pure/1.0.0/pure-min.css" rel="stylesheet">
+</head>
+<body>
+    <h1>
+        <a href="{{ url_for('routes_blog.index') }}">你好{{ u.username }}，消息界面，返回博客</a>
+    </h1>
+    <br><br>
+
+    <table class="pure-table pure-table-striped">
+        <thead>
+        <tr>
+            <th>用户ID</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+
+        <tbody id="id-todo-list">
+        {% for u in users %}
+            <tr class="todo-cell">
+                <td>
+                    {{ u.id }}
+                </td>
+                <td>
+                    <a href="{{ url_for('routes_user.user_profile',user_id=u.id) }}">
+                        {{ u.username }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br><br>
+
+    <form method="post" class="pure-form" action={{ url_for('routes_mail.add') }}>
+        <fieldset class="pure-group">
+            <input type="text" class="pure-input-1-2" name="receiver_id" placeholder="收件人用户ID"><br>
+            <input type="text" class="pure-input-1-2" name="title" placeholder="title"><br>
+            <textarea class="pure-input-1-2" name="content" placeholder="content"></textarea>
+        </fieldset>
+
+        <button type="submit" class="pure-button pure-input-1-2 pure-button-primary">发送邮件</button>
+    </form>
+
+    <br><br><br>
+    <table class="pure-table pure-table-striped">
+        <thead>
+        <tr>
+            <th>收到的邮件</th>
+            <th>发件人</th>
+            <th>发送时间</th>
+        </tr>
+        </thead>
+
+        <tbody id="id-todo-list">
+        {% for r in receives %}
+            <tr class="todo-cell">
+                <td>
+                    <a href = {{ url_for("routes_mail.view", mail_id = r.id) }} >
+                        {{ r.title }}
+                    </a>
+                </td>
+                <td>
+                    {{ r.sender_user().username }}
+                </td>
+                <td>
+                    {{ r.created_time_formatted() }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br><br><br>
+
+    <table class="pure-table pure-table-striped">
+        <thead>
+        <tr>
+            <th>发送的邮件</th>
+            <th>收件人</th>
+            <th>发送时间</th>
+        </tr>
+        </thead>
+
+        <tbody id="id-todo-list">
+        {% for s in sends%}
+            <tr class="todo-cell">
+                <td>
+                    <a href = {{ url_for("routes_mail.view", mail_id = s.id) }} >
+                        {{ s.title }}
+                    </a>
+                </td>
+                <td>
+                    {{ s.receiver_user().username }}
+                </td>
+                <td>
+                    {{ s.created_time_formatted() }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>

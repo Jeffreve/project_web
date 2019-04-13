@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {#title#}
+    <title>{% block title %}{% endblock %}</title>
+
+    {#style common#}
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    {#style#}
+    {% block style %}{% endblock %}
+
+    {#icon#}
+    <link rel="icon" href="/static/pic/icon.ico" type="image/x-icon">
+</head>
+
+<body>
+    {#页眉#}
+    <div class='navbar'>
+        <div class='navbar-inner'>
+            <div class='container'>
+                <a class='brand' href={{ url_for('routes_blog.index') }}>
+                    Jcode 论坛
+                </a>
+
+                <ul class='nav pull-right'>
+{#                    <li><a href={{ url_for('routes_user.login_view') }}>search</a></li>#}
+                    <li><a href={{ url_for('routes_user.user_profile', user_id=u.id) }}>你好， {{ u.username }}</a></li>
+                    <li><a href={{ url_for('routes_user.user_setting_view') }}>设置</a></li>
+                    <li><a href={{ url_for('routes_mail.index') }}>消息</a></li>
+                    <li><a href={{ url_for('routes_user.login_view') }}>登录</a></li>
+                    <li><a href={{ url_for('routes_user.register_view') }}>注册</a></li>
+{#                    <li><a href={{ url_for('routes_user.login_view') }}>退出</a></li>#}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{#main#}
+<div id="main">
+{% block sidebar %}{% endblock %}
+
+{% block content %}{% endblock %}
+</div>
+
+{#页尾#}
+{#<div id="footer">#}
+{#    <div id="footer_main">#}
+{#        <div class="links">#}
+{#            <a class="dark" href={{ url_for('routes_admin.user_test') }}> 管理 </a>#}
+{#            <span class="dark"> / </span>#}
+{#            <a class="dark" href={{ url_for('routes_blog.index') }}>Jcode 论坛</a>#}
+{#            <span class="dark"> / </span>#}
+{#            <a class="dark" href={{ url_for('routes_blog.index') }}>http://129.211.44.142</a>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+
+</body>
+
+{#script common#}
+{#<script src="/static/js/basic.js"></script>#}
+
+{#script#}
+{% block script %}{% endblock %}
+
+</html>

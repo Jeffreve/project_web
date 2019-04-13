@@ -1,0 +1,226 @@
+{% extends "base2.html" %}
+
+
+{#title#}
+{% block title %}
+Blog detail
+{% endblock %}
+
+
+{#style#}
+{% block style %}
+<link rel="stylesheet" href="/static/css/detail.css">
+
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js"></script>
+<script src="//cdn.bootcss.com/prism/1.8.0/prism.js"></script>
+<script src="//cdn.bootcss.com/prism/1.8.1/components/prism-python.min.js"></script>
+<link href="//cdn.bootcss.com/prism/1.8.0/themes/prism.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+<div id="content">
+    <div class="panel">
+        <!-- 标题和简介 -->
+        <div class="header topic_header">
+            <span class="topic_full_title">
+                {{ blog.title }}
+            </span>
+
+            <div class="changes">
+                <span class="time_live" data-ct="{{ blog.created_time }}">
+
+                </span>
+
+                <span>
+                    作者 <a href="{{ url_for('routes_user.user_profile' ,user_id=blog.user().id) }}">{{ blog.user().username }}</a>
+                </span>
+
+                <span>
+                    {{ blog.view }}  次浏览
+                </span>
+
+                <span>
+                    来自 {{ blog.board().content }}
+                </span>
+
+                <br>
+                {% if u.id == v.id %}
+                    <a href="{{ url_for('routes_blog.edit', id=blog.id, token=token) }}">修改</a>
+                    <a href="{{ url_for('routes_blog.delete', id=blog.id, token=token) }}">删除</a>
+                {% else %}
+                    <br>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class='inner topic'>
+            <div class='topic_content'>
+                <div class="markdown-text ">{{ blog.content }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="header">
+                <span class="col_fade">{{ blog.comments() | count }} 回复</span>
+        </div>
+        {% for c in blog.comments() %}
+        <!-- reply 1 -->
+        <div class="cell reply_area reply_item" reply_id="5acc33c32c4e775a29952ab6" reply_to_id="" id="5acc33c32c4e775a29952ab6">
+            <!-- author info -->
+            <div class="author_content">
+                <a href="{{ url_for('routes_user.user_profile', user_id=c.user().id) }}" class="user_avatar">
+                    <img src="{{ c.user().user_image }}">
+                </a>
+
+                <div class="user_info">
+                    <a class="dark reply_author" href="{{ url_for('routes_user.user_profile', user_id=c.user().id) }}">{{ c.user().username }}</a>
+                    <a class="reply_time"
+                       href="https://cnodejs.org/topic/5acc30a6462f6166955a5573#5acc33c32c4e775a29952ab6">
+                        {{ loop.index }}楼•
+                        <span class="time_live" data-ct="{{ c.created_time }}"></span>
+                    </a>
+                    <span class="reply_by_author">作者</span>
+                </div>
+
+                    <div class="user_action">
+                        {% if u.id == c.user_id %}
+                            <a href="{{ url_for('routes_blog.comment_edit', id=c.id) }}" class="edit_reply_btn">
+                                编辑
+                            </a>
+                        {% endif %}
+
+                        {% if (u.id == c.user_id) or (u.id == blog.user_id)  %}
+                            <a href="{{ url_for('routes_blog.comment_delete', id=c.id, b_id=c.blog_user_id) }}" class="delete_reply_btn">
+                                删除
+                            </a>
+                        {% endif %}
+                    </div>
+            </div>
+
+            <!-- content -->
+            <div class="reply_content">
+                <div class="markdown-text">{{ c.content }}</div>
+            </div>
+
+            <div class="clearfix">
+                <div class="reply2_area">
+                    <form class="reply2_form" action="https://cnodejs.org/5a44ee318230827a18293b53/reply" method="post">
+                    <input type="hidden" name="_csrf" value="TQqrQwBq-SYk0E4NcuKPvkgfooxgFxWpHq1o">
+                    <input type="hidden" name="reply_id" value="5a4f24db18b949f35359b0f3">
+                    <div class="markdown_editor in_editor">
+                        <div class="markdown_in_editor">
+                        <textarea class="span8 editor reply_editor" id="reply2_editor_5a4f24db18b949f35359b0f3" name="r_content" rows="4" style="display: none;"></textarea><div class="editor-toolbar"><a class="eicon-bold"></a><a class="eicon-italic"></a><i class="separator">|</i><a class="eicon-quote"></a><a class="eicon-unordered-list"></a><a class="eicon-ordered-list"></a><i class="separator">|</i><a class="eicon-link"></a><a class="eicon-image"></a><i class="separator">|</i><a class="eicon-info" href="http://lab.lepture.com/editor/markdown" target="_blank"></a><a class="eicon-preview"></a><a class="eicon-fullscreen"></a></div><div class="CodeMirror cm-s-paper"><div style="overflow: hidden; position: relative; width: 3px; height: 0px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none; font-size: 4px;"></textarea></div><div class="CodeMirror-hscrollbar"><div style="height: 1px;"></div></div><div class="CodeMirror-vscrollbar"><div style="width: 1px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="min-width: 33px;"><div style="position: relative;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>&nbsp;<span style="display: inline-block; width: 1px; margin-right: -1px;">&nbsp;</span></pre></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code"></div><div class="CodeMirror-cursor">&nbsp;</div><div class="CodeMirror-cursor CodeMirror-secondarycursor">&nbsp;</div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px;"></div><div class="CodeMirror-gutters" style="display: none;"></div></div></div>
+                        <div class="editor_buttons">
+                        <input class="span-primary reply2_submit_btn submit_btn" type="submit" data-id="5a4f24db18b949f35359b0f3" data-loading-text="回复中.." value="回复">
+                        </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="panel">
+        <div class="header">
+            <span class="col_fade">添加回复</span>
+        </div>
+        <div class="inner reply">
+            <form id="reply_form" action="{{ url_for('routes_blog.comment_add') }}" method="post">
+                <input type="hidden" name="blog_id" value="{{ blog.id }}">
+                <input type="hidden" name="blog_user_id" value="{{ blog.user().id }}">
+                <div class='markdown_editor in_editor'>
+                    <div class='markdown_in_editor'>
+                        <textarea class='editor' name='content' rows='20' placeholder='文章支持 Markdown 语法, 请注意标记代码'></textarea>
+                        <div class='editor_buttons'>
+                            <input type="submit" class='span-primary submit_btn' data-loading-text="提交中" value="提交">
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="_csrf" id="_csrf" value="JJwkyVYA-nbsqpy73FHYfsBz7D86KnpADIjY">
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{#script#}
+{% block script %}
+<script>
+    var log = function() {
+        console.log.apply(console, arguments)
+    }
+
+    var e = function (sel) {
+        return document.querySelector(sel)
+    }
+
+    var es = function (sel) {
+        return document.querySelectorAll(sel)
+    }
+
+    var markContents = function () {
+        var contentDivs = es('.markdown-text')
+        for (var i = 0; i < contentDivs.length; i++) {
+            var contentDiv = contentDivs[i]
+            console.log('pre marked', contentDiv.textContent, contentDiv.innerHTML)
+            var content = marked(contentDiv.textContent)
+            console.log('after marked', content)
+            contentDiv.innerHTML = content
+        }
+    }
+
+    var highlight = function () {
+        var code_list = es('pre code')
+        for (var i = 0; i < code_list.length; i++) {
+            var code = code_list[i]
+            code.className = code.className.replace('lang', 'language')
+        }
+    }
+
+    var registerTimer = function () {
+        setInterval(function () {
+            var times = es('.time_live')
+            for (var i = 0; i < times.length; i++) {
+                var t = times[i]
+                var time = Number(t.dataset.ct)
+                var now = Math.floor(new Date() / 1000)
+                // delta 是秒数
+                var delta = now - time
+                log(delta)
+                if (delta <= 60){
+                    var s = `发布于 ${delta} 秒前`
+                }
+                else if (delta <= 3600){
+                    log('hh')
+                    delta = Math.floor(delta / 60)
+                    var s = `发布于 ${delta} 分钟前`
+                }
+                else if (delta <= 86400){
+                    delta = Math.floor(delta / 3600)
+                    var s = `发布于 ${delta} 小时前`
+                }
+                else{
+                    delta = Math.floor(delta / 86400)
+                    var s = `发布于 ${delta} 天前`
+                }
+                t.innerText = s
+            }
+        }, 1000)
+    }
+
+    var __main = function () {
+        markContents()
+        registerTimer()
+        highlight()
+    }
+
+    __main()
+</script>
+<script src="/static/js/blog.js"></script>
+{% endblock %}

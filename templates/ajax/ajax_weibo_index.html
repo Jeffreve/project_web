@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Ajax weibo</title>
+        <link href="https://cdn.bootcss.com/pure/1.0.0/pure-min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .weibo-cell{
+                border: 1px green solid;
+                margin: 10px;
+            }
+            .comment-cell{
+                border: 1px red solid;
+                margin: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            <a href="{{ url_for('routes_admin.user_test') }}">
+                你好 {{ u.username }} ，这是 {{ author.username }} 的主页
+            </a>
+        </h1>
+
+        <table class="pure-table pure-table-striped">
+            <thead>
+            <tr>
+                <th>ID 用户链接</th>
+                <th>Name</th>
+                <th>创建时间</th>
+            </tr>
+            </thead>
+
+            <tbody id="id-todo-list">
+            {% for u in users %}
+                <tr class="todo-cell">
+                    <td>
+                        {{ u.id }}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('routes_ajaxweibo.index',user_id=u.id) }}">
+                            {{ u.username }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ u.created_time_formatted() }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+{#        <span>visit id:</span>#}
+        <input hidden id='id-input-visit' value="{{ author.id }}">
+{#        <span>user id:</span>#}
+        <input hidden id='id-input-user' value="{{ u.id }}">
+        <br>
+
+        <input class="pure-input-rounded" id='id-input-weibo'>
+        <button class="pure-button" id='id-button-add'>添加微博</button>
+        <br><br>
+
+        <div class="weibo-list">
+        </div>
+
+    <script src='/static/ajax/basic.js'></script>
+
+    {% if u.username == author.username%}
+        <script src='/static/ajax/weibo.js'></script>
+    {% else %}
+        <script src='/static/ajax/weibo1.js'></script>
+    {% endif %}
+
+    </body>
+{#    <script src='/static/ajax/basic.js'></script>#}
+{#    <script src='/static/ajax/weibo.js'></script>#}
+    <script src='/static/ajax/comment.js' async></script>
+</html>

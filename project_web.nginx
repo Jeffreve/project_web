@@ -1,0 +1,27 @@
+server {
+    listen 80;
+
+    location /pic1 {
+        alias /root/project_web/pic1;
+    }
+
+    location /pic2 {
+        alias /root/project_web/pic2;
+    }
+
+    location /pic3 {
+        alias /root/project_web/pic3;
+    }
+
+    location /uploads {
+    alias /root/project_web/user_image;
+    }
+
+    location /static {
+    alias /root/project_web/static;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+    }
+}

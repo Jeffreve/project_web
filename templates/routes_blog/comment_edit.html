@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EDIT COMMENT</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <h1>Hello {{ u.username }}</h1>
+    <h2>原内容： {{comment.content}}</h2>
+
+    <form class="pure-form" action="{{ url_for('routes_blog.comment_update') }}" method="post">
+        <input hidden="hidden" name="id" placeholder="id" value="{{ comment.id }}">
+        <br>
+        <input hidden="hidden" name="weibo_user_id" placeholder="weibo_user_id" value="{{ comment.blog_user_id }}">
+        <br>
+        <input class="pure-input-rounded" name="content" placeholder="content" value="{{ comment.content }}">
+        <button class="pure-button">提交修改</button>
+    </form>
+</body>
+</html>
+
